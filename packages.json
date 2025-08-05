@@ -1,0 +1,56 @@
+{
+  "speech_recognition": {
+    "name": "Speech Recognition",
+    "import_name": "speech_recognition",
+    "pip_name": "speechrecognition",
+    "version": "3.14.3",
+    "status": "installed",
+    "error": null,
+    "is_required": false
+  },
+  "pyttsx3": {
+    "name": "Text-to-Speech",
+    "import_name": "pyttsx3",
+    "pip_name": "pyttsx3",
+    "version": null,
+    "status": "installed",
+    "error": null,
+    "is_required": false
+  },
+  "cv2": {
+    "name": "OpenCV",
+    "import_name": "cv2",
+    "pip_name": "opencv-python",
+    "version": "4.12.0",
+    "status": "installed",
+    "error": null,
+    "is_required": false
+  },
+  "PIL": {
+    "name": "Pillow",
+    "import_name": "PIL",
+    "pip_name": "Pillow",
+    "version": "11.3.0",
+    "status": "installed",
+    "error": null,
+    "is_required": false
+  },
+  "requests": {
+    "name": "HTTP Requests",
+    "import_name": "requests",
+    "pip_name": "requests",
+    "version": "2.32.4",
+    "status": "installed",
+    "error": null,
+    "is_required": true
+  },
+  "tkinter": {
+    "name": "Tkinter GUI",
+    "import_name": "tkinter",
+    "pip_name": "tkinter",
+    "version": "Built-in",
+    "status": "installed",
+    "error": null,
+    "is_required": true
+  }
+}

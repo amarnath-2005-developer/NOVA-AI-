@@ -1,0 +1,18 @@
+{
+    "open calculator": "calc",
+    "open notepad": "notepad",
+    "open browser": "start chrome",
+    "open downloads": "explorer %AMARNATH%\\Downloads",
+    "open documents": "explorer %USERPROFILE%\\Documents",
+    "open desktop": "explorer %USERPROFILE%\\Desktop",
+    "open cmd": "cmd",
+    "say hello": "Hello! How can I help you today?",
+    "open youtube": "start https://www.youtube.com",
+    "open gmail": "start https://mail.google.com",
+    "open camera ": " start camera",
+    "open spotify": "start spotify",
+    "open excel": "C:\\\\Program Files\\\\Microsoft Office\\\\root\\\\Office16\\\\EXCEL.EXE",
+    "open powerpoint": "C:\\\\Program Files\\\\Microsoft Office\\\\root\\\\Office16\\\\POWERPNT.EXE",
+    "open notion": "C:\\\\Users\\\\AMARNATH\\\\AppData\\\\Local\\\\Programs\\\\Notion\\\\Notion.exe",
+    "say good bye ": "dengi puka"
+}
