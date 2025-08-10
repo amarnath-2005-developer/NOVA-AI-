@@ -2,13 +2,14 @@ import tkinter as tk
 from tkinter import simpledialog, scrolledtext, messagebox
 import threading
 
+
 class AIAssistantGUI:
     def __init__(self, backend, trainer):
         self.backend = backend
         self.trainer = trainer
 
         self.root = tk.Tk()
-        self.root.title("AI Voice Assistant")
+        self.root.title("NOVA AI Assistant")
         self.root.geometry("900x700")
         self.root.configure(bg="#2b2b2b")
 
@@ -16,12 +17,16 @@ class AIAssistantGUI:
         self.setup_gui()
 
     def setup_gui(self):
-        tk.Label(self.root, text="AI Assistant", font=("Arial", 20, "bold"),
-                 bg="#2b2b2b", fg="white").pack(pady=10)
+        tk.Label(
+            self.root, text="NOVA AI Assistant", font=("Arial", 20, "bold"),
+            bg="#2b2b2b", fg="white"
+        ).pack(pady=10)
 
         # Input area
-        self.text_input = tk.Entry(self.root, font=("Arial", 14),
-                                   bg="#404040", fg="white", insertbackground="white")
+        self.text_input = tk.Entry(
+            self.root, font=("Arial", 14),
+            bg="#404040", fg="white", insertbackground="white"
+        )
         self.text_input.pack(fill=tk.X, padx=20, pady=5)
         self.text_input.bind("<Return>", lambda e: self.process_input())
 
@@ -45,31 +50,22 @@ class AIAssistantGUI:
         self.camera_label.pack(pady=10)
 
         # Response area
-        self.response_text = scrolledtext.ScrolledText(self.root, font=("Arial", 12),
-                                                       bg="#404040", fg="white", wrap=tk.WORD)
+        self.response_text = scrolledtext.ScrolledText(
+            self.root, font=("Arial", 12),
+            bg="#404040", fg="white", wrap=tk.WORD
+        )
         self.response_text.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
 
     def process_input(self):
         user_input = self.text_input.get().strip()
-        self.chat_history = tk.Text(self.root, height=25, width=80, wrap=tk.WORD)
-        self.chat_history.pack(padx=10, pady=10)
+        self.response_text.insert(tk.END, f"You: {user_input}\n")
 
+        # Let backend decide — JSON command or Gemini
+        response = self.backend.process_user_input(user_input)
+
+        self.response_text.insert(tk.END, f"NOVA: {response}\n")
+        self.response_text.see(tk.END)
         self.text_input.delete(0, tk.END)
-
-        self.chat_history.insert(tk.END, "You: " + user_input + "\n")
-
-        # Check for custom command match
-        custom_response = self.backend.execute_custom_command(user_input)
-        if custom_response:
-            self.chat_history.insert(tk.END, "NOVA: " + custom_response + "\n")
-            self.backend.speak_text(custom_response)
-            return
-
-        # Else use Gemini AI
-        response = self.backend.get_ai_response(user_input)
-        self.chat_history.insert(tk.END, "NOVA: " + response + "\n")
-        self.backend.speak_text(response)
-
 
     def voice_input(self):
         def listen():
@@ -89,7 +85,6 @@ class AIAssistantGUI:
             self.trainer.add_command(trigger, response)
             messagebox.showinfo("Trained", f"Command '{trigger}' saved!")
 
-    # Camera functions
     def toggle_camera(self):
         if not self.backend.camera_active:
             if self.backend.start_camera():
