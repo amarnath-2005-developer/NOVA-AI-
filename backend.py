@@ -1,18 +1,18 @@
-import os
-import json
 import requests
+import pyttsx3
 import subprocess
 import threading
 import cv2
 from PIL import Image, ImageTk
 import speech_recognition as sr
-import pyttsx3
+import os
+import json
 
 class Backend:
     def __init__(self, config_path="config.json", commands_path="commands.json"):
         # Load config.json
         if not os.path.exists(config_path):
-            raise FileNotFoundError(f"Config file not found: {config_path}")
+            raise FileNotFoundError(f"{config_path} not found!")
 
         with open(config_path, "r") as f:
             config = json.load(f)
@@ -21,7 +21,7 @@ class Backend:
         self.model = config.get("gemini_model", "gemini-1.5-flash")
 
         if not self.api_key:
-            raise ValueError("No API key configured. Add gemini_api_key to config.json.")
+            print("⚠ No API key found — AI features will be disabled.")
 
         # Load commands.json
         if os.path.exists(commands_path):
@@ -30,68 +30,26 @@ class Backend:
         else:
             self.commands = {}
 
-        # Initialize tools
-        self.recognizer = sr.Recognizer()
-        self.microphone = sr.Microphone()
+        # Init TTS
         self.tts_engine = pyttsx3.init()
         self.setup_tts()
 
-        # Camera
+        # Init voice recognition
+        self.recognizer = sr.Recognizer()
+        self.microphone = sr.Microphone()
+
+        # Camera vars
         self.camera = None
         self.camera_active = False
 
-    # ----------------- COMMAND EXECUTION -----------------
-    def run_json_command(self, user_input):
-        cmd_key = user_input.lower().strip()
-        if cmd_key in self.commands:
-            path_or_cmd = self.commands[cmd_key]
-
-            # Open URL
-            if path_or_cmd.startswith("http://") or path_or_cmd.startswith("https://"):
-                subprocess.Popen(f'start {path_or_cmd}', shell=True)
-                return f"🌐 Opening website: {path_or_cmd}"
-
-            # Run .bat file
-            if path_or_cmd.lower().endswith(".bat"):
-                if os.path.exists(path_or_cmd):
-                    subprocess.Popen(path_or_cmd, shell=True)
-                    return f"⚡ Running script: {path_or_cmd}"
-                return f"❌ File not found: {path_or_cmd}"
-
-            # Run app or command
-            if os.path.exists(path_or_cmd):
-                subprocess.Popen([path_or_cmd], shell=True)
-                return f"📂 Launching: {path_or_cmd}"
-
-            # Shell command
-            subprocess.Popen(path_or_cmd, shell=True)
-            return f"⚙️ Executing: {path_or_cmd}"
-
-        return None  # Means no match found
-
-    # ----------------- AI RESPONSE -----------------
-    def get_ai_response(self, query):
-        """Send query to Gemini API"""
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent?key={self.api_key}"
-        headers = {"Content-Type": "application/json"}
-        data = {"contents": [{"parts": [{"text": query}]}]}
-
-        try:
-            r = requests.post(url, headers=headers, json=data, timeout=10)
-            if r.status_code == 200:
-                result = r.json()
-                return result["candidates"][0]["content"]["parts"][0]["text"]
-            return f"API Error {r.status_code}: {r.text}"
-        except Exception as e:
-            return f"Error connecting to AI: {e}"
-
-    # ----------------- TEXT TO SPEECH -----------------
+    # Setup text-to-speech
     def setup_tts(self):
         voices = self.tts_engine.getProperty("voices")
         if voices:
             self.tts_engine.setProperty("voice", voices[0].id)
         self.tts_engine.setProperty("rate", 150)
 
+    # Speak
     def speak_text(self, text):
         def speak():
             try:
@@ -101,7 +59,47 @@ class Backend:
                 pass
         threading.Thread(target=speak, daemon=True).start()
 
-    # ----------------- VOICE RECOGNITION -----------------
+    # Run commands from JSON
+    def run_json_command(self, command):
+        cmd = self.commands.get(command.lower().strip())
+        if not cmd:
+            return None
+
+        # If it's a URL
+        if cmd.startswith("http"):
+            subprocess.Popen(f'start {cmd}', shell=True)
+            return f"🌐 Opening {cmd}"
+
+        # If it's a file path or .bat
+        if os.path.exists(cmd):
+            subprocess.Popen(cmd, shell=True)
+            return f"📂 Opening {cmd}"
+
+        # Else treat as shell command
+        subprocess.Popen(cmd, shell=True)
+        return f"⚙ Running command: {cmd}"
+
+    # AI Response
+    def get_ai_response(self, query):
+        if not self.api_key:
+            return "⚠ AI unavailable — No API key set in config.json."
+
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent?key={self.api_key}"
+        headers = {"Content-Type": "application/json"}
+        data = {"contents": [{"parts": [{"text": query}]}]}
+
+        try:
+            r = requests.post(url, headers=headers, json=data, timeout=10)
+            if r.status_code == 200:
+                result = r.json()
+                text = result["candidates"][0]["content"]["parts"][0]["text"]
+                self.speak_text(text)
+                return text
+            return f"API Error {r.status_code}: {r.text}"
+        except Exception as e:
+            return str(e)
+
+    # Voice Recognition
     def listen_voice(self):
         try:
             with self.microphone as source:
@@ -111,7 +109,7 @@ class Backend:
         except:
             return None
 
-    # ----------------- CAMERA -----------------
+    # Camera Handling
     def start_camera(self):
         self.camera = cv2.VideoCapture(0)
         if self.camera.isOpened():
@@ -132,3 +130,12 @@ class Backend:
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 return ImageTk.PhotoImage(Image.fromarray(frame))
         return None
+        # Handle user text from GUI
+    def handle_user_text(self, user_input):
+        # 1. Try JSON commands first
+        cmd_result = self.run_json_command(user_input)
+        if cmd_result:
+            return cmd_result
+
+        # 2. Otherwise, use AI for a smart reply
+        return self.get_ai_response(user_input)
