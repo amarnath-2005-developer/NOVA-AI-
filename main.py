@@ -1,16 +1,11 @@
-import json
 from backend import Backend
+from trainer import Trainer
 from GUI import AIAssistantGUI
 
 def main():
-    # Load config.json manually
-    with open("config.json", "r") as f:
-        config = json.load(f)
-
-    api_key = config.get("api_key", "")
-    
-    backend = Backend(api_key)  # ✅ Pass only api_key now
-    gui = AIAssistantGUI(backend, trainer=None)
+    backend = Backend(config_path="config.json", commands_path="commands.json")
+    trainer = Trainer(commands_path="commands.json")
+    gui = AIAssistantGUI(backend, trainer)
     gui.run()
 
 if __name__ == "__main__":
