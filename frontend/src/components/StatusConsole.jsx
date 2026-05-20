@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './StatusConsole.css';
+import { API_BASE_URL } from '../lib/api';
 
 const StatusConsole = () => {
   const [data, setData] = useState({
@@ -24,7 +25,7 @@ const StatusConsole = () => {
 
   const fetchStatus = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/v1/health');
+      const response = await fetch(`${API_BASE_URL}/health`);
       if (response.ok) {
         const newData = await response.json();
         setData(newData);

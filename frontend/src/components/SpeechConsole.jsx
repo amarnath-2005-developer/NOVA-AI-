@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './SpeechConsole.css';
-import { sendCommand, transcribeAudio } from '../lib/api';
+import { sendCommand, transcribeAudio, API_BASE_URL } from '../lib/api';
 import { tts } from '../lib/tts';
 import { createAudioCapture } from '../lib/audioCapture';
 
@@ -53,7 +53,7 @@ const SpeechConsole = () => {
     
     const pollBackend = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/v1/health");
+        const res = await fetch(`${API_BASE_URL}/health`);
         const data = await res.json();
         if (data.active_user && data.active_user !== activeUser) {
           setActiveUser(data.active_user);

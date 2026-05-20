@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Settings.css';
+import { API_BASE_URL } from '../lib/api';
 
 // --- NEURAL DROPDOWN COMPONENT ---
 const NeuralDropdown = ({ options, value, onChange }) => {
@@ -1024,7 +1025,7 @@ const SettingsPage = () => {
     // Synchronize to the backend database
     try {
       const activeUser = localStorage.getItem('nova_active_user') || 'amarnath';
-      await fetch('http://localhost:8000/api/v1/auth/preferences', {
+      await fetch(`${API_BASE_URL}/auth/preferences`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
