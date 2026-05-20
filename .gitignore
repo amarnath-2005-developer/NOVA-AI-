@@ -1,0 +1,43 @@
+# Dependency directories
+frontend/node_modules/
+backend/venv/
+backend/legacy_node/node_modules/
+node_modules/
+
+# Production/Build files
+frontend/dist/
+frontend/dist-ssr/
+
+# Environment files (sensitive keys)
+backend/.env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Project-specific local storage / vault
+backend/NOVA_VAULT/
+backend/vault/
+backend/Study Materials/
+
+# Python cache & build files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/

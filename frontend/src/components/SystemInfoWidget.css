@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+.system-info-widget {
+  position: fixed;
+  top: 120px;
+  right: 20px;
+  width: 240px;
+  background: rgba(5, 15, 20, 0.85);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(0, 245, 212, 0.3);
+  /* Custom JARVIS angled corners: Top-Left and Bottom-Right */
+  clip-path: polygon(
+    15px 0, 
+    100% 0, 
+    100% calc(100% - 15px), 
+    calc(100% - 15px) 100%, 
+    0 100%, 
+    0 15px
+  );
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: #00f5d4;
+  z-index: 950;
+  padding: 20px 15px;
+  box-shadow: inset 0 0 20px rgba(0, 245, 212, 0.05),
+              0 10px 30px rgba(0, 0, 0, 0.6);
+  /* Hexagonal pattern background */
+  background-image: url("data:image/svg+xml,%3Csvg width='30' height='52' viewBox='0 0 30 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 0l15 8.66v17.32L15 34.64 0 26.98V9.66z' fill='none' stroke='rgba(0, 245, 212, 0.05)' stroke-width='1'/%3E%3Cpath d='M30 26l15 8.66v17.32L30 60.64 15 52.98V35.66z' fill='none' stroke='rgba(0, 245, 212, 0.05)' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+/* Extra glowing border segments */
+.system-info-widget::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 15px; width: 40px; height: 2px;
+  background: #00f5d4;
+  box-shadow: 0 0 10px #00f5d4;
+}
+
+.system-info-widget::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 15px; width: 40px; height: 2px;
+  background: #00f5d4;
+  box-shadow: 0 0 10px #00f5d4;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.widget-header .title {
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  background: #00f5d4;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00f5d4;
+}
+
+.clock-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.time-display {
+  font-family: 'Orbitron', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  text-shadow: 0 0 15px rgba(0, 245, 212, 0.5);
+}
+
+.time-display .large {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.time-display .small {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.date-display {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  opacity: 0.7;
+  margin-top: 8px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0;
+  position: relative;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 245, 212, 0.2);
+}
+
+.diamond {
+  width: 8px;
+  height: 8px;
+  background: #00f5d4;
+  transform: rotate(45deg);
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 8px rgba(0, 245, 212, 0.6);
+}
+
+.weather-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather-main {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.weather-main .icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+}
+
+.weather-main .temp {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 245, 212, 0.4);
+}
+
+.condition {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  opacity: 0.7;
+  margin-top: 5px;
+}
+
+.location-section {
+  background: rgba(0, 245, 212, 0.05);
+  border: 1px solid rgba(0, 245, 212, 0.15);
+  border-radius: 6px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.location-section .pin {
+  font-size: 1rem;
+}
+
+.location-section .city {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.s-label {
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  opacity: 0.6;
+}
+
+.s-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(0, 245, 212, 0.4);
+}

@@ -1,0 +1,70 @@
+.system-status-panel {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 280px;
+  background: rgba(5, 15, 20, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 245, 212, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  z-index: 900;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.panel-header {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: #00f5d4;
+  margin-bottom: 15px;
+  opacity: 0.8;
+  border-bottom: 1px solid rgba(0, 245, 212, 0.1);
+  padding-bottom: 8px;
+}
+
+.status-grid-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.status-box {
+  background: rgba(0, 245, 212, 0.05);
+  border: 1px solid rgba(0, 245, 212, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+
+.status-box:hover {
+  background: rgba(0, 245, 212, 0.1);
+  border-color: rgba(0, 245, 212, 0.3);
+}
+
+.box-icon {
+  font-size: 1.4rem;
+  opacity: 0.9;
+}
+
+.box-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.box-info .label {
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  color: #00f5d4;
+  opacity: 0.5;
+  margin-bottom: 2px;
+}
+
+.box-info .value {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}

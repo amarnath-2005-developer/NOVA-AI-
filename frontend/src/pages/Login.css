@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.main-container {
+  width: 100%;
+  height: 100vh;
+  background: url('https://images.pexels.com/photos/176851/pexels-photo-176851.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb');
+  background-size: cover;
+  background-position: center;
+  transition: 0.4s linear;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  width: 400px;
+  background: rgba(0, 0, 0, .8);
+  padding: 40px;
+  box-sizing: border-box;
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, .5);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.box h2 {
+  margin: 0 0 30px;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+}
+
+.box p {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.box a {
+  color: #9a9d9e;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.box a:hover {
+  color: #03a9f4;
+}
+
+.box .input-box {
+  position: relative;
+}
+
+.box .input-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #fff;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  letter-spacing: 1px;
+  background: transparent;
+}
+
+.box .input-box label {
+  position: absolute;
+  color: #fff;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.box .input-box input:focus~label,
+.box .input-box input:valid~label {
+  top: -20px;
+  left: 0;
+  color: #03a9f4;
+  font-size: 12px;
+}
+
+.box input[type=submit] {
+  background: #03a9f4;
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 12px 24px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.box input[type=submit]:hover {
+  background: #0288d1;
+  transform: scale(1.02);
+}
+
+.login-success-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #010101;
+}
+
+.netflix-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.netflix-title {
+  color: #fff;
+  font-size: 3.5vw;
+  font-weight: 400;
+  margin-bottom: 2em;
+  text-align: center;
+}
+
+.netflix-profiles {
+  display: flex;
+  justify-content: center;
+  gap: 2vw;
+  flex-wrap: wrap;
+}
+
+.netflix-profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 10vw;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+.netflix-profile-card:hover {
+  transform: scale(1.05);
+}
+
+.netflix-avatar {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.netflix-profile-card:hover .netflix-avatar {
+  border-color: #fff;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.netflix-avatar span {
+  font-size: 5vw;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+.netflix-name {
+  color: grey;
+  font-size: 1.5vw;
+  margin-top: 0.6em;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.netflix-profile-card:hover .netflix-name {
+  color: #fff;
+}
+
+/* Add Profile Specific */
+.add-avatar {
+  background-color: transparent;
+  border: 2px dashed grey;
+}
+
+.add-profile-card:hover .add-avatar {
+  border: 2px solid #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.add-avatar span {
+  color: grey;
+}
+
+.add-profile-card:hover .add-avatar span {
+  color: #fff;
+}
+
+.netflix-add-input {
+  margin-top: 0.6em;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid grey;
+  color: #fff;
+  text-align: center;
+  width: 80%;
+  outline: none;
+  font-size: 1.2vw;
+  transition: border-color 0.3s ease;
+}
+
+.netflix-add-input:focus {
+  border-bottom: 1px solid #fff;
+}
+
+.netflix-error {
+  color: #e50914;
+  margin-top: 2em;
+  font-size: 1.2vw;
+}
+
+.netflix-signout-btn {
+  margin-top: 4em;
+  padding: 0.5em 1.5em;
+  background: transparent;
+  color: grey;
+  border: 1px solid grey;
+  font-size: 1.2vw;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.netflix-signout-btn:hover {
+  color: #fff;
+  border-color: #fff;
+}
