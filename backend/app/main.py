@@ -31,16 +31,21 @@ async def startup_event():
 
     # Preload the NLP models during startup so the first command is fast
     try:
-        from app.modules.memory.embedder import get_model
-        print("Preloading memory embedder... (this may take a few seconds)")
-        get_model()
-        print("Memory embedder loaded successfully.")
+        import os
+        if os.getenv("LOW_RESOURCE_MODE", "false").lower() == "true":
+            print("Low resource mode active: skipping memory embedder preloading to conserve memory.")
+        else:
+            from app.modules.memory.embedder import get_model
+            print("Preloading memory embedder... (this may take a few seconds)")
+            get_model()
+            print("Memory embedder loaded successfully.")
         
         # Start background filesystem scan (incremental)
         import asyncio
         from app.modules.filesystem_index.search_api import scanner
         print("Starting background filesystem index scan...")
         asyncio.create_task(scanner.scan(full_rescan=False))
+
         
     except Exception as e:
         print(f"Warning: Failed to preload memory embedder or start indexer: {e}")
